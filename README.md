@@ -1,11 +1,6 @@
----
-math: true
-mermaid: true
----
-
 # Pyhom
 
-> ⚠️ **Warning:** Repository under construction!
+[![Python version](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
 
 In this repository, we present "PyHom: a Python library for homogenization".
 
@@ -16,18 +11,27 @@ For more information, please refer to the paper
 1. Cruz-González, O., Cornaggia, R., Dartois, S., and Brenner, R. (2024). Accounting for spatial distribution in mean-field homogenization of particulate composites. International Journal of Solids and Structures, 294:112747. DOI [10.1016/j.ijsolstr.2024.112747](https://doi.org/10.1016/j.ijsolstr.2024.112747)
 
 **Keywords:**\
-Microstructures,
-Particulate reinforced composites, Homogenization, RSA, Voronoï Diagram, Spatial distribution, Mean Field estimates, FFT-based solver.
+Microstructures, Particulate reinforced composites, Homogenization, RSA, Voronoï Diagram, Spatial distribution, Mean Field estimates, FFT-based solver.
 
 ## Updates
 
-Main functionalities:
+- `pyhom` is now officially available on the Python Package Index. You can view the project on PyPI here [https://pypi.org/project/pyhom/](https://pypi.org/project/pyhom/). (Sep 26, 2025)
 
 - `pyhom_core`: Calculate the normalized effective conductivity properties of composite materials in 2D by varying the conductivity contrast parameter `gamma`. (Dec 17, 2024)
 
-All the functionalities described in the paper will be incorporated soon.
-
 ## Installation
+
+### Recommended Method: Install from PyPI
+
+1. Ensure you have Python 3.10 and pip installed.
+
+2. Run the following command:
+
+```bash
+pip install pyhom
+```
+
+### Alternative Method: For Developers
 
 1. Python 3.10 and Git installed on your system.
 

@@ -7,6 +7,8 @@ import time
 import copy
 import pickle
 import zipfile
+import requests
+import io as standard_io
 import warnings
 # To ignore all warnings
 warnings.filterwarnings("ignore")
@@ -693,21 +695,33 @@ class Core:
         return folder_results_path, subfolder_img_path, subfolder_rsa_iter_path, subfolder_vd_image_path, subfolder_ip_figures_path, subfolder_saved_data_path, subfolder_num_comp_path
 
     def get_built_in_dataset(self, labelNumber: str) -> None:
+        # The URL to the RAW dataset.zip file on GitHub 
+        zip_url = "https://raw.githubusercontent.com/olcruzgonzalez/pyhom/main/pyhom/built-in/dataset.zip"
 
         cwd = Path(os.getcwd())
         destination_dir = cwd.joinpath("built-in_input")
         # Create the folder
         destination_dir.mkdir(parents=True, exist_ok=True)
 
-        dataset_zip_path = cwd.joinpath("pyhom/built-in/dataset.zip")
+        try:
+            print(f"Downloading dataset from GitHub...")
+            response = requests.get(zip_url)
+            response.raise_for_status()
 
-        with zipfile.ZipFile(dataset_zip_path, 'r') as zip_ref:
-            for member in zip_ref.namelist():
-                if member.startswith(f'labelNumber_{labelNumber}' + '/'):
-                    zip_ref.extract(member, destination_dir)
+            zip_file_bytes = standard_io.BytesIO(response.content)
 
-        print(f'### Retrieved files from built-in dataset: labelNumber_{labelNumber} ###')  
-         
+            with zipfile.ZipFile(zip_file_bytes, 'r') as zip_ref:
+                for member in zip_ref.namelist():
+                    if member.startswith(f'labelNumber_{labelNumber}' + '/'):
+                        zip_ref.extract(member, destination_dir)
+
+            print(f'### Retrieved files from built-in dataset: labelNumber_{labelNumber} ###')
+
+        except requests.exceptions.RequestException as e:
+            print(f"Error downloading the file: {e}")
+        except zipfile.BadZipFile:
+            print("Error: The downloaded file is not a valid zip file.")
+
     def input_data(self, output_dir: str, input_file_path:  str) -> None:
         
         self.globalPrm['dir']=Path(os.getcwd())  # Project directory.
